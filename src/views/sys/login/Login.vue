@@ -31,6 +31,7 @@
             </div>
           </div>
         </div>
+
         <div class="flex w-full h-full py-5 xl:h-auto xl:py-0 xl:my-0 xl:w-6/12">
           <div
             :class="`${prefixCls}-form`"
@@ -49,8 +50,7 @@
 </template>
 <script lang="ts" setup>
   import { computed } from 'vue';
-  import { AppLogo } from '/@/components/Application';
-  import { AppLocalePicker } from '/@/components/Application';
+  import { AppLogo, AppLocalePicker } from '/@/components/Application';
   import LoginForm from './LoginForm.vue';
   import ForgetPasswordForm from './ForgetPasswordForm.vue';
   import RegisterForm from './RegisterForm.vue';
