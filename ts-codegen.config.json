@@ -1,0 +1,16 @@
+{
+  "outputFolder": "src/api",
+  "requestCreateLib": "/@/utils/http/axios",
+  "requestCreateMethod": "createRequest",
+  "apiSpecsPaths": [
+    {
+      "name": "apis",
+      "path": "http://127.0.0.1:4523/export/openapi?projectId=1104173&specialPurpose=openapi-generator"
+    }
+  ],
+  "options": {
+    "withComments": true,
+    "typeWithPrefix": false,
+    "backwardCompatible": false
+  }
+}
