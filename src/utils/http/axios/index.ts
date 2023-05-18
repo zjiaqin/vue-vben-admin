@@ -18,6 +18,7 @@ import { useI18n } from '/@/hooks/web/useI18n';
 import { joinTimestamp, formatRequestDate } from './helper';
 import { useUserStoreWithOut } from '/@/store/modules/user';
 import { AxiosRetry } from '/@/utils/http/axios/axiosRetry';
+import type { ApiResult, GetApiResult } from '/@/api/type';
 
 import axios from 'axios';
 
@@ -32,7 +33,7 @@ const transform: AxiosTransform = {
   /**
    * @description: 处理响应数据。如果数据不是预期格式，可直接抛出错误
    */
-  transformResponseHook: (res: AxiosResponse<Result>, options: RequestOptions) => {
+  transformResponseHook: (res: AxiosResponse<ApiResult>, options: RequestOptions) => {
     const { t } = useI18n();
     const { isTransformResponse, isReturnNativeResponse } = options;
     // 是否返回原生响应头 比如：需要获取响应头时使用该属性
@@ -287,29 +288,21 @@ export const defHttp = createAxios();
 //   },
 // });
 
-// export const createRequest = <TReq,TResp extends Result<any>>(
-//   name: string,
-//   requestConfigCreator: (args: TReq) => AxiosRequestConfig,
-// ) => {
-//   const request = function (args: TReq, options?: RequestOptions) {
-//     type Res = GetApiResult<TResp>;
-//     const pResp = defHttp.request<Res>(requestConfigCreator(args), options);
-
-//     return pResp;
-//   };
-//   request.id = name;
-
-//   return request;
-// };
-
 export const createRequest = <TReq, TResp extends Result<any>>(
   name: string,
   requestConfigCreator: (args: TReq) => AxiosRequestConfig,
 ) => {
   const request = function (args: TReq, options?: RequestOptions) {
-    return defHttp.request<TResp['data']>(requestConfigCreator(args), options);
+    type Res = GetApiResult<TResp>;
+    const pResp = defHttp.request<Res>(requestConfigCreator(args), options);
+
+    return pResp;
   };
   request.id = name;
 
   return request;
 };
+
+export function hasToken() {
+  return document.cookie.includes('has_token=1');
+}

@@ -6,6 +6,7 @@ import { type PluginOption } from 'vite';
 import purgeIcons from 'vite-plugin-purge-icons';
 
 import { createAppConfigPlugin } from './appConfig';
+import { configAutoImportPlugin } from './autoImport';
 import { configCompressPlugin } from './compress';
 import { configHtmlPlugin } from './html';
 import { configMockPlugin } from './mock';
@@ -28,6 +29,9 @@ async function createPlugins({ isBuild, root, enableMock, compress, enableAnalyz
 
   // vite-plugin-html
   vitePlugins.push(configHtmlPlugin({ isBuild }));
+
+  // vite-plugin-auto-import
+  vitePlugins.push(configAutoImportPlugin({ root }));
 
   // vite-plugin-svg-icons
   vitePlugins.push(configSvgIconsPlugin({ isBuild }));

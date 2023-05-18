@@ -12,8 +12,10 @@ const httpsRE = /^https:\/\//;
  * @param list
  */
 export function createProxy(_list: string) {
-  const list = JSON.parse(_list);
   const ret: ProxyTargetList = {};
+  if (!_list) return ret;
+  const list = JSON.parse(_list);
+
   for (const [prefix, target] of list) {
     const isHttps = httpsRE.test(target);
 

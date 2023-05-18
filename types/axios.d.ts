@@ -56,3 +56,7 @@ export interface UploadFileParams {
   filename?: string;
   [key: string]: any;
 }
+
+export type ApiParam<A extends Api> = A extends (args: infer R) => any ? R : any;
+export type ApiResp<A extends Api> = ReturnType<A> extends Promise<infer D> ? D : any;
+export type ApiData<A extends Api> = ReturnType<A> extends Promise<infer D> ? D : any;

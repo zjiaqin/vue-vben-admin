@@ -235,6 +235,21 @@ export const adminUpdate = createRequest<
 }));
 
 /**
+ * 处理申请
+ */
+export const agentApplyHandle = createRequest<
+  {
+    requestBody?: { apply_id: number; reason: string; status: number };
+  },
+  {}
+>('agentApplyHandle', ({ requestBody }) => ({
+  url: `/api/agent/apply_handle`,
+  method: 'POST',
+  data: requestBody,
+  headers: { 'Content-Type': 'application/json' },
+}));
+
+/**
  * 申请列表
  */
 export const agentApplyList = createRequest<
@@ -258,7 +273,7 @@ export const agentList = createRequest<
   },
   {
     code: number;
-    data: (null | DaiLiXiangQing1[])[];
+    data: (null | DaiLiXiangQing[])[];
     msg: string;
     pagination: Pagination;
     request_id: string;
@@ -283,13 +298,14 @@ export const agentUpdate = createRequest<
       announcement_en: string;
       domain: string;
       site_name: string;
+      status: number;
       telegram_bot_name: string;
       telegram_bot_token: string;
       telegram_bot_username: string;
       telegram_cs_username: string;
     };
   },
-  { code: number; data: DaiLiXiangQing1; msg: string; request_id: string }
+  { code: number; data: DaiLiXiangQing; msg: string; request_id: string }
 >('agentUpdate', ({ requestBody }) => ({
   url: `/api/agent/update`,
   method: 'POST',
@@ -363,6 +379,7 @@ export const announcementInsert = createRequest<
       image: string;
       image_en: string;
       is_popup: number;
+      lang: string;
       show_position: string;
       sort: number;
       status: number;
@@ -421,6 +438,7 @@ export const announcementUpdate = createRequest<
       image: string;
       image_en: string;
       is_popup: number;
+      lang: string;
       show_position: string;
       sort: number;
       status: number;
@@ -489,6 +507,14 @@ export const authLogin = createRequest<
   data: requestBody,
   headers: { 'Content-Type': 'application/json' },
 }));
+
+/**
+ * 管理员登出
+ */
+export const authLogout = createRequest<
+  undefined,
+  { code: number; data: null; msg: string; request_id: string }
+>('authLogout', () => ({ url: `/api/auth/logout`, method: 'GET' }));
 
 /**
  * 获取AWSToken
@@ -2536,6 +2562,7 @@ export interface ArticleDetail {
   image: string;
   image_en: string;
   is_popup: number;
+  lang: string;
   modify_time: number;
   show_position: string;
   sort: number;
@@ -2644,6 +2671,7 @@ export interface DaiLiShenQingXiangQing {
   create_time: number;
   delete_time: number;
   handle_time: number;
+  reason: string;
   status: number;
   user: UserDetail;
   user_id: number;
@@ -2662,35 +2690,7 @@ export interface DaiLiXiangQing {
   settle_address: string;
   site_name: string;
   status: number;
-  telegram_bot_name: string;
-  telegram_bot_token: string;
-  telegram_bot_username: string;
-  telegram_cs_username: string;
-  template_code: string;
-  total_buy_order_num: number;
-  total_buy_settle_amount: number;
-  total_sell_order_num: number;
-  total_sell_settle_amount: number;
-  total_settle_amount: number;
-  update_run_status: number;
-  update_run_time: number;
-  user: UserDetail;
-  user_id: number;
-}
-
-export interface DaiLiXiangQing1 {
-  agent_id: number;
-  announcement_cn: string;
-  announcement_en: string;
-  buy_settle_ratio: number;
-  create_time: number;
-  domain: string;
-  remark: string;
-  role: number;
-  sell_settle_ratio: number;
-  settle_address: string;
-  site_name: string;
-  status: number;
+  subdomain: string;
   telegram_bot_name: string;
   telegram_bot_token: string;
   telegram_bot_username: string;
@@ -2763,7 +2763,9 @@ export interface DiscountDetail {
   modify_time: number;
   status: number;
   sun: number;
+  sun_1d: number;
   sun_1h: number;
+  sun_2d: number;
   sun_3h: number;
 }
 
