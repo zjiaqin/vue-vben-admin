@@ -32,3 +32,6 @@ package-lock.json
 pnpm-lock.yaml
 
 .history
+
+# auto-import
+types/auto-imports.d.ts

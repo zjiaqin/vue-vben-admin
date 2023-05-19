@@ -7,6 +7,8 @@ export function configAutoImportPlugin({ root }: { root: string }) {
 
   return AutoImport({
     dts: 'types/auto-imports.d.ts',
+    // targets to transform
+    include: [/\.[tj]sx?$/, /\.vue$/, /\.vue\?vue/, /\.md$/],
     imports: ['vue', 'vue-router', 'pinia'],
     dirs: [langDir, autoImportDir],
 
